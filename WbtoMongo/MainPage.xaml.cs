@@ -24,6 +24,7 @@ namespace WbtoMongo
     {
         ProgressIndicator prog;
         PhotoChooserTask selectphoto;
+        CameraCaptureTask cameraCapture;
 
         String imageFileName;
         Stream imageStream;
@@ -77,7 +78,7 @@ namespace WbtoMongo
             String text = tbText.Text;
             //text = text + "  |  " + DateTime.Now.ToString();
 
-            if (imageFileName != null && imageFileName != string.Empty)
+            if (!string.IsNullOrWhiteSpace(imageFileName))
             {
                 BinaryReader reader = new BinaryReader(imageStream);
                 byte[] bytes = reader.ReadBytes((int)imageStream.Length);
@@ -114,31 +115,49 @@ namespace WbtoMongo
 
         private void btnPickPic_Click(object sender, EventArgs e)
         {
-            if (imageFileName == null || imageFileName == string.Empty)
-            {
-                selectphoto = new PhotoChooserTask();
-                selectphoto.ShowCamera = true;
-                selectphoto.Completed += new EventHandler<PhotoResult>(selectphoto_Completed);
-                selectphoto.Show();
-            }
-            else
-            {
-                clearPhoto();
-            }
+            imageFileName = string.Empty;
+            imageStream = null;
+
+            selectphoto = new PhotoChooserTask();
+            selectphoto.ShowCamera = true;
+            selectphoto.Completed += new EventHandler<PhotoResult>(selectphoto_Completed);
+            selectphoto.Show();
+
         }
 
         void selectphoto_Completed(object sender, PhotoResult e)
         {
             if (e.TaskResult == TaskResult.OK && e.ChosenPhoto != null)
             {
-                //tbText.Text = e.OriginalFileName;
+                btnClearPic.Visibility = System.Windows.Visibility.Visible;
+
                 imageStream = e.ChosenPhoto;
                 imageFileName = e.OriginalFileName;
                 
                 image1.Source = new BitmapImage(new Uri(imageFileName));
-                (ApplicationBar.Buttons[1] as ApplicationBarIconButton).Text = "删除图片";
-                (ApplicationBar.Buttons[1] as ApplicationBarIconButton).IconUri = 
-                    new Uri("/Images/appbar.delete.rest.png", UriKind.RelativeOrAbsolute);
+            }
+        }
+
+        private void btnCapPhoto_Click(object sender, EventArgs e)
+        {
+            imageFileName = string.Empty;
+            imageStream = null;
+
+            cameraCapture = new CameraCaptureTask();
+            cameraCapture.Completed += new EventHandler<PhotoResult>(cameracapture_Completed);
+            cameraCapture.Show();
+        }
+
+        void cameracapture_Completed(object sender, PhotoResult e)
+        {
+            if (e.TaskResult == TaskResult.OK && e.ChosenPhoto != null)
+            {
+                btnClearPic.Visibility = System.Windows.Visibility.Visible;
+
+                imageStream = e.ChosenPhoto;
+                imageFileName = e.OriginalFileName;
+
+                image1.Source = new BitmapImage(new Uri(imageFileName));
             }
         }
 
@@ -152,9 +171,8 @@ namespace WbtoMongo
             imageFileName = null;
             imageStream = null;
             image1.Source = null;
-            (ApplicationBar.Buttons[1] as ApplicationBarIconButton).Text = "插入图片";
-            (ApplicationBar.Buttons[1] as ApplicationBarIconButton).IconUri =
-                new Uri("/Images/appbar.feature.camera.rest.png", UriKind.RelativeOrAbsolute);
+
+            btnClearPic.Visibility = System.Windows.Visibility.Collapsed;
         }
         #endregion
 
@@ -171,6 +189,11 @@ namespace WbtoMongo
         private void ApplicationBarMenuItem_SwitchAccount_Click(object sender, EventArgs e)
         {
             navigateToLoginPage();
+        }
+
+        private void btnClearPic_Click(object sender, RoutedEventArgs e)
+        {
+            clearPhoto();
         }
 
     }

@@ -32,13 +32,15 @@
             <!--<Button Content="发送" Height="72" HorizontalAlignment="Left" Margin="296,212,0,0" Name="btnSubmit" VerticalAlignment="Top" Width="160" Click="btnSubmit_Click" />
             <Button Content="图片" Height="72" HorizontalAlignment="Left" Margin="0,212,0,0" Name="btnPickPic" VerticalAlignment="Top" Width="160" Click="btnPickPic_Click" />-->
             <Image Height="317" HorizontalAlignment="Center" Margin="6,212,6,0" Name="image1" Stretch="Uniform" VerticalAlignment="Top" Width="444" />
+            <Button Content="X" Height="72" HorizontalAlignment="Left" Margin="378,202,0,0" Name="btnClearPic" VerticalAlignment="Top" Width="72" Visibility="Collapsed" Click="btnClearPic_Click" Background="#FF121212" />
         </Grid>
     </Grid>
  
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.check.rest.png" Text="发送" Click="btnSubmit_Click" />
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar.feature.camera.rest.png" Text="插入图片" Click="btnPickPic_Click" />
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.feature.camera.rest.png" Text="拍照" Click="btnCapPhoto_Click" />
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.folder.rest.png" Text="选择图片" Click="btnPickPic_Click" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="切换账号" Click="ApplicationBarMenuItem_SwitchAccount_Click" />
             </shell:ApplicationBar.MenuItems>

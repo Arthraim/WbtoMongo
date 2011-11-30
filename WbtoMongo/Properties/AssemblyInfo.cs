@@ -9,9 +9,9 @@ using System.Resources;
 [assembly: AssemblyTitle("WbtoMongo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Arthur Wang")]
 [assembly: AssemblyProduct("WbtoMongo")]
-[assembly: AssemblyCopyright("Copyright ©  2011")]
+[assembly: AssemblyCopyright("Copyright © Arthur Wang 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
