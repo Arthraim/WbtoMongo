@@ -51,6 +51,12 @@ namespace WbtoMongo
         {
             NavigationService.RemoveBackEntry();
 
+            InputScope scope = new InputScope();
+            InputScopeName scopeName = new InputScopeName();
+            scopeName.NameValue = InputScopeNameValue.Chat;
+            scope.Names.Add(scopeName);
+            tbText.InputScope = scope;
+
             if (!Session.hasUsernameAndPassword())
             {
                 var settings = IsolatedStorageSettings.ApplicationSettings;
