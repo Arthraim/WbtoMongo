@@ -105,6 +105,16 @@ namespace WbtoMongo
             {
                 SystemTray.SetIsVisible(this, false);
 
+                if (response.ResponseStatus != ResponseStatus.Completed)
+                {
+                    MessageBox.Show("网络请求失败 " + response.ResponseStatus.ToString());
+                    return;
+                }
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    MessageBox.Show("HTTP请求失败 " + response.StatusCode.ToString());
+                    return;
+                }
                 String json = response.Content;
                 JObject ret = JObject.Parse(json);
                 JObject user = (JObject)ret["user"];
